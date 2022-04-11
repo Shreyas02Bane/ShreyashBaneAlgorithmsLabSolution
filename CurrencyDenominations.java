@@ -31,11 +31,11 @@ public class CurrencyDenominations {
 		System.out.println("Enter the amount : ");
 		try {
 			amount = sc.nextInt();
-			if(amount < 0) {
+			if (amount < 0) {
 				amount = 0;
 				throw new InvalidCurrencyDenominationException("Amount should be always positive");
 			}
-		}catch(InvalidCurrencyDenominationException icde) {
+		} catch (InvalidCurrencyDenominationException icde) {
 			System.out.println(icde);
 		}
 		printNotesToBePaid();
@@ -132,25 +132,30 @@ public class CurrencyDenominations {
 	}
 
 	public void printNotesToBePaid() {
-		
-		while (amount != 0) {
-			
-			System.out.println("The Notes needed to pay amount : ");
-			
-			for (int i = currency.length - 1; i >= 0; i--) {
+		if (amount > 0) {
+			while (amount != 0) {
 
-				notes[i] = amount / currency[i];
-				amount = amount - (notes[i] * currency[i]);
+				System.out.println("The Notes needed to pay amount : ");
 
-				System.out.println(currency[i] + " : " + notes[i]);
+				for (int i = currency.length - 1; i >= 0; i--) {
+
+					notes[i] = amount / currency[i];
+					amount = amount - (notes[i] * currency[i]);
+
+					System.out.println(currency[i] + " : " + notes[i]);
+				}
+
+				if (currency[0] != 1 && amount < currency[0]) {
+
+					System.out.println("1 : " + amount);
+					amount = amount - (amount * 1);
+				}
 			}
 
-			if (currency[0] != 1 && amount < currency[0]) {
-
-				System.out.println("1 : " + amount);
-				amount = amount - (amount * 1);
-			}
+		} else if (amount == 0) {
+			System.out.println("Amount is zero, so no currency denominations can be done!");
 		}
+		System.out.println("Thank You for Using the Program!");
 
 	}
 
